@@ -20,12 +20,20 @@ var custom_medium_airport = L.icon({
 function createMap(){
 
     // two different map options
-    var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png', {
+    /*
+    var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}', {
         minZoom: 0,
         maxZoom: 20,
         attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         ext: 'png'
     });
+    */
+
+    var esriDarkGray = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+        maxZoom: 16
+    });
+
 
     var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -38,13 +46,13 @@ function createMap(){
     map = L.map('map', {
         center: [41.50, -110.35],
         zoom: 3,
-        layers: [Stadia_AlidadeSmoothDark]
+        layers: [esriDarkGray]
     });
     
     
     // sets basemap options for user to choose from
     var baseMaps = {
-        "Smooth Dark": Stadia_AlidadeSmoothDark,
+        "Smooth Dark": esriDarkGray,
         "Dark Matter": CartoDB_DarkMatter
     };
 
@@ -53,8 +61,10 @@ function createMap(){
         "Medium Airports": medium_airports
     };
 
+    /*
     // adds starting base tileset to map
     Stadia_AlidadeSmoothDark.addTo(map);
+    */
 
     // adds addtional base tilesets and overlays to map
     layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
